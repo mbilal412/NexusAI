@@ -26,9 +26,16 @@ const Register = () => {
       navigate("/verify-email")
     } catch (error) {
       const newError = {}
-      error.response.data.errors.map((error) => {
+      const validationErrors = error?.response?.data?.errors || []
+
+      validationErrors.forEach((error) => {
         newError[error.path] = error.msg
       })
+
+      if (validationErrors.length === 0) {
+        newError.general = error?.response?.data?.message || error?.message || "Something went wrong"
+      }
+
       setError(newError)
       console.table(newError)
     } finally {
@@ -174,6 +181,8 @@ const Register = () => {
               </div>
               {<span className="error-msg">{error.password ? error.password : ""}</span>}
             </div>
+
+            {<span className="error-msg">{error.general ? error.general : ""}</span>}
 
             <button type="submit" className="submit-btn" disabled={isSubmitting}>
               {isSubmitting ? 'Creating account...' : 'Create account'}

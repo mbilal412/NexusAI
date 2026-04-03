@@ -28,7 +28,7 @@ const Login = () => {
       setPassword("")
     } catch (error) {
       console.log(error)
-      setError(error.response.data.message)
+      setError(error?.response?.data?.message || error?.message || "Something went wrong")
     } finally {
       setIsSubmitting(false)
     }
