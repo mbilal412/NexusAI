@@ -14,10 +14,13 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError("")
+    setIsSubmitting(true)
     try {
       await auth.handleLogin({ email, password })
       navigate("/")
@@ -26,6 +29,8 @@ const Login = () => {
     } catch (error) {
       console.log(error)
       setError(error.response.data.message)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -164,8 +169,8 @@ const Login = () => {
               <span className="error-msg">{error}</span>
             </div>
 
-            <button type="submit" className="submit-btn">
-              Sign in
+            <button type="submit" className="submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
 

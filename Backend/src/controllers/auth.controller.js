@@ -2,6 +2,8 @@ import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken"
 import sendRegisterEmail from "../services/mail.service.js"
 
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+
 export const register = async (req, res, next) => {
   const { name, email, password } = req.body
 
@@ -29,7 +31,7 @@ export const register = async (req, res, next) => {
             <h2>Verify your Email Address</h2>
             <p>Thank you for signing up! We're excited to have you on board.</p>
             <p>Please click the link below to verify your email address and activate your account.</p>
-            <a href="http://localhost:5173/verified-email?token=${verificationToken}">Verify Email</a>
+            <a href="${FRONTEND_URL}/verified-email?token=${verificationToken}">Verify Email</a>
             <p>If you did not create an account, you can safely ignore this email.</p>
             <p>This link will expire in 24 hours.</p>`
   })
@@ -120,7 +122,11 @@ export const login = async (req, res) => {
 
 
 export const logout = async (req, res) => {
-  res.clearCookie('token')
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  })
   res.status(200).json({
     message: "Logout successful",
     success: true,

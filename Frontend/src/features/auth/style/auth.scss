@@ -563,9 +563,15 @@ $font-body: 'DM Sans', sans-serif;
       font-size: 16px;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: lighten($accent-purple, 5%);
       box-shadow: 0 8px 25px $accent-glow;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      box-shadow: none;
     }
   }
 }

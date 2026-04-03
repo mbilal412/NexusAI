@@ -15,9 +15,12 @@ const Register = () => {
   const [password, setPassword] = useState("")
   const [fullname, setFullname] = useState("")
   const [showPassword, setShowPassword] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError({})
+    setIsSubmitting(true)
     try {
       await auth.handleRegister({ email, password, fullname })
       navigate("/verify-email")
@@ -28,6 +31,8 @@ const Register = () => {
       })
       setError(newError)
       console.table(newError)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -170,8 +175,8 @@ const Register = () => {
               {<span className="error-msg">{error.password ? error.password : ""}</span>}
             </div>
 
-            <button type="submit" className="submit-btn">
-              Create account
+            <button type="submit" className="submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? 'Creating account...' : 'Create account'}
             </button>
           </form>
 

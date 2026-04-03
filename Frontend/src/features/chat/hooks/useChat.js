@@ -1,4 +1,3 @@
-import { initializeSocketConnection } from "../services/chat.socket";
 import { getChats, getMessages, sendMessage, newChat, generateTitle, deleteChat } from "../services/chat.service";
 import { useDispatch, useSelector } from "react-redux";
 import { startStreamingAssistant, appendStreamingChunk, finalizeStreamingAssistant, setChats, setCurrentChat, addMessage, setMessages, createNewChat, removeChat, setLoading } from "../chat.slice";
@@ -94,7 +93,6 @@ export const useChat = () => {
 
 
     return {
-        initializeSocketConnection,
         handleSendMessage,
         handleGetChats,
         handleGetMessages,

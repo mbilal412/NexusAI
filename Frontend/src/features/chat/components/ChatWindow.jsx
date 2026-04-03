@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useSelector } from 'react-redux'
 import remarkGfm from 'remark-gfm'
@@ -6,9 +7,16 @@ import remarkBreaks from 'remark-breaks'
 
 const ChatWindow = ({handleNewChat}) => {
 
+    const messagesContainerRef = useRef(null)
+
     const messages = useSelector((state) => state.chat.messages)
     const chats = useSelector((state) => state.chat.chats)
     const currentChat = useSelector((state) => state.chat.currentChat)
+
+    useEffect(() => {
+        if (!messagesContainerRef.current) return
+        messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight
+    }, [currentChat, messages])
 
 
     if (chats.length === 0 || currentChat===null) {
@@ -30,7 +38,7 @@ const ChatWindow = ({handleNewChat}) => {
     }
     // console.log(messages)
     return (
-        <div className="messages-container">
+        <div ref={messagesContainerRef} className="messages-container">
             {messages.map((msg) => {
                 const isAssistant = msg.role === 'assistant'
 

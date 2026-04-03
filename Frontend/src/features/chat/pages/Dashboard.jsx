@@ -23,8 +23,6 @@ const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   useEffect(() => {
-    chat.initializeSocketConnection()
-
     const fetchChats = async () => {
       await chat.handleGetChats()
     }
