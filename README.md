@@ -7,7 +7,7 @@
 ![NexusAI Chat](./screenshots/chat.png)
 
 ## 🚀 Live Demo
-🔗 [nexusai.vercel.app](https://nexusai.vercel.app)
+🔗 [nexusai.vercel.app](https://nexusai-live.vercel.app/)
 
 ---
 
